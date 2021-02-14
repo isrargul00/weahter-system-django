@@ -1,0 +1,49 @@
+{% extends 'layout.html' %}
+
+
+{% block body_block%}
+    <h1 class="text-center text-info">Welcome here this is home page </h1>
+
+    <div class="container">
+        <div class="float-right">
+            <div class="card"  style="width:24rem;">
+                <div class="card-header">
+                    <h4 class="text-center">Weather System</h4>
+                </div>
+                <div class="card-body">
+                     <h3 class=" card-title text-center p-2" id="cityname"></h3>
+                    <h5 class="mt-0" id="citytemperature"></h5>
+                    <h5 class="mt-0" id="citydescription"></h5>
+                    <h5 class="mt-0" id="cityicon"></h5>
+
+                </div>
+            </div>
+            <div class="card-footer">
+            <input type="text" name="city" id="city" placeholder="enter city name " class="p-2 rounded form-control">
+            <button id="check" class="btn btn-success p-2 form-control mt-2">Check</button>
+            </div>
+            </div>
+
+    </div>
+
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script>
+    $(document).ready(function(){
+    $("#check").click(function(){
+      $.ajax({
+        url: '{% url 'core:weather' %}',
+        data: {
+          'city': $("#city").val()
+        },
+        dataType: 'json',
+        success: function (data) {
+           $("#cityname").text("city " + data.city);
+           $("#citytemperature").text("tempareture F " + data.temperature);
+           $("#citdescription").text("description " + data.description);
+           $("#cityicon").text("icon " + data.icon);
+        }
+      });
+     });
+    });
+</script>
+{% endblock%}
